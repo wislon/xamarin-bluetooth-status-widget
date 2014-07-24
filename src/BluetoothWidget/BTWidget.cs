@@ -3,8 +3,6 @@ using Android.Appwidget;
 using Android.Content;
 using Android.Bluetooth;
 using Android.Util;
-using Android.OS;
-using Java.Lang;
 using Android.Widget;
 
 namespace BluetoothWidget
@@ -16,22 +14,12 @@ namespace BluetoothWidget
     [MetaData("android.appwidget.provider", Resource = "@xml/bt_widget")]
     public class BTWidget : AppWidgetProvider
     {
-        public override void OnUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
-        {
-            base.OnUpdate(context, appWidgetManager, appWidgetIds);
-//      for (int i = 0; i < appWidgetIds.Length; i++)
-//      {
-//        int appWidgetId = appWidgetIds[i];
-//        RemoteViews views = new RemoteViews(context.PackageName, Resource.Layout.inital_layout);
-//        appWidgetManager.UpdateAppWidget(appWidgetId, views);
-//      }
-        }
 
         public override void OnReceive(Context context, Intent intent)
         {
             if (intent.Action == Android.Bluetooth.BluetoothAdapter.ActionStateChanged)
             {
-                Log.Info("BTService", "Received BT State change message");
+                Log.Info("BTService", "Received BT Action State change message");
                 ProcessBTStateChangeMessage(context, intent);
             }
         }
