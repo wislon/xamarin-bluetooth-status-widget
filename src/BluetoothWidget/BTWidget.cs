@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using System.Collections;
+using Android.App;
 using Android.Appwidget;
 using Android.Content;
 using Android.Bluetooth;
@@ -14,7 +15,6 @@ namespace BluetoothWidget
   [MetaData("android.appwidget.provider", Resource = "@xml/bt_widget")]
   public class BTWidget : AppWidgetProvider
   {
-
     public override void OnReceive(Context context, Intent intent)
     {
       if (intent.Action == Android.Bluetooth.BluetoothAdapter.ActionStateChanged)
@@ -38,10 +38,33 @@ namespace BluetoothWidget
       // http://stackoverflow.com/questions/4073907/update-android-widget-from-activity?rq=1 - 'this.Class' is the key (not .GetType())
       ComponentName thisWidget = new ComponentName(context, this.Class);
       Log.Debug("BTService", thisWidget.FlattenToString());
-      string miniMessage = string.Format("{0}->{1}", oldState, newState);
+      Log.Debug("BTService", string.Format("{0}->{1}", oldState, newState));
       Log.Debug("BTService", "remoteViews: {0}", remoteViews.ToString());
-      int imgResource = (newState == 10 || newState == 11) ? Resource.Drawable.bluetooth_off : Resource.Drawable.bluetooth_on;
+      int imgResource = Resource.Drawable.bluetooth_off;
+      switch((Android.Bluetooth.State)newState)
+      {
+        case Android.Bluetooth.State.Off:
+        case Android.Bluetooth.State.TurningOn:
+          {
+          imgResource = Resource.Drawable.bluetooth_off;
+          break;
+        }
 
+        case Android.Bluetooth.State.On:
+        case Android.Bluetooth.State.TurningOff:
+          {
+          imgResource = Resource.Drawable.bluetooth_on;
+          break;
+        }
+
+        default:
+        {
+          imgResource = Resource.Drawable.bluetooth_off;
+          break;
+        }
+
+      }
+      
       remoteViews.SetImageViewResource(Resource.Id.imgBluetooth, imgResource);
       appWidgetManager.UpdateAppWidget(thisWidget, remoteViews);
     }
