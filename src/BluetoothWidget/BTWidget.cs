@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Android.App;
+﻿using Android.App;
 using Android.Appwidget;
 using Android.Content;
 using Android.Bluetooth;
