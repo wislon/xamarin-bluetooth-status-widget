@@ -15,11 +15,13 @@ namespace BluetoothWidget
   [MetaData("android.appwidget.provider", Resource = "@xml/bt_widget")]
   public class BTWidget : AppWidgetProvider
   {
+    private const string APP_NAME = "BTWidget";
+
     public override void OnReceive(Context context, Intent intent)
     {
       if (intent.Action == Android.Bluetooth.BluetoothAdapter.ActionStateChanged)
       {
-        Log.Info("BTService", "Received BT Action State change message");
+        Log.Info(APP_NAME, "Received BT Action State change message");
         ProcessBTStateChangeMessage(context, intent);
       }
     }
@@ -29,17 +31,17 @@ namespace BluetoothWidget
       int oldState = intent.GetIntExtra(BluetoothAdapter.ExtraPreviousState, -1);
       int newState = intent.GetIntExtra(BluetoothAdapter.ExtraState, -1);
       string message = string.Format("Bluetooth State Change from {0} to {1}", oldState, newState);
-      Log.Info("BTService", message);
+      Log.Info(APP_NAME, message);
 
       var appWidgetManager = AppWidgetManager.GetInstance(context);
       RemoteViews remoteViews = new RemoteViews(context.PackageName, Resource.Layout.initial_layout);
-      Log.Debug("BTService", "this.GetType().ToString(): {0}", this.GetType().ToString());
+      Log.Debug(APP_NAME, "this.GetType().ToString(): {0}", this.GetType().ToString());
 
       // http://stackoverflow.com/questions/4073907/update-android-widget-from-activity?rq=1 - 'this.Class' is the key (not .GetType())
       ComponentName thisWidget = new ComponentName(context, this.Class);
-      Log.Debug("BTService", thisWidget.FlattenToString());
-      Log.Debug("BTService", string.Format("{0}->{1}", oldState, newState));
-      Log.Debug("BTService", "remoteViews: {0}", remoteViews.ToString());
+      Log.Debug(APP_NAME, thisWidget.FlattenToString());
+      Log.Debug(APP_NAME, string.Format("{0}->{1}", oldState, newState));
+      Log.Debug(APP_NAME, "remoteViews: {0}", remoteViews.ToString());
       int imgResource = Resource.Drawable.bluetooth_off;
       switch((Android.Bluetooth.State)newState)
       {
