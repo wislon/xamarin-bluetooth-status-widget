@@ -100,6 +100,7 @@
           <XmlFormattingPolicy inheritsSet="Mono" inheritsScope="application/xml" scope="application/xml">
             <DefaultFormat AttributesInNewLine="True" AlignAttributes="True" />
           </XmlFormattingPolicy>
+          <VersionControlPolicy inheritsSet="Mono" />
         </Policies>
       </Properties>
     </MonoDevelop>
