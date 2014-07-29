@@ -26,9 +26,7 @@ namespace BluetoothWidget
   // see https://developer.android.com/guide/topics/appwidgets/index.html
   // and http://stackoverflow.com/questions/4073907/update-android-widget-from-activity?rq=1
   [BroadcastReceiver(Label = "Bluetooth Widget")]
-  [IntentFilter 
-    (new string[] {"android.appwidget.action.APPWIDGET_UPDATE", BluetoothAdapter.ActionStateChanged
-    })]
+  [IntentFilter(new string[] { "android.appwidget.action.APPWIDGET_UPDATE", BluetoothAdapter.ActionStateChanged })]
   [MetaData("android.appwidget.provider", Resource = "@xml/bt_widget")]
   public class BTWidget : AppWidgetProvider
   {
@@ -82,7 +80,7 @@ namespace BluetoothWidget
             break;
           }
       }
-      
+
       remoteViews.SetImageViewResource(Resource.Id.imgBluetooth, imgResource);
       appWidgetManager.UpdateAppWidget(thisWidget, remoteViews);
     }
