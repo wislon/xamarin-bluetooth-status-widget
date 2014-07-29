@@ -55,7 +55,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
-    <AndroidResource Include="Resources\drawable\bluetooth_file_exchange.png" />
     <AndroidResource Include="Resources\values\styles.xml" />
     <AndroidResource Include="Resources\layout\initial_layout.axml" />
     <AndroidResource Include="Resources\drawable-ldpi\bluetooth_on.png" />
