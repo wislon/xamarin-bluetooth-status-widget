@@ -32,12 +32,31 @@ namespace BluetoothWidget
   {
     private const string APP_NAME = "BTWidget";
 
+    /// <summary>
+    /// This event fires for every intent you're filtering for. There can be lots of them,
+    /// and they can arrive very quickly, so spend as little time as possible processing them
+    /// on the UI thread.
+    /// </summary>
+    /// <param name="context">The Context in which the receiver is running.</param>
+    /// <param name="intent">The Intent being received.</param>
     public override void OnReceive(Context context, Intent intent)
     {
+      Log.Info(APP_NAME, "OnReceive received intent: {0}", intent.Action);
+
+      if(intent.Action == "android.appwidget.action.APPWIDGET_UPDATE")
+      {
+        Log.Info(APP_NAME, "Received AppWidget Update");
+        var currentState = Android.Bluetooth.BluetoothAdapter.DefaultAdapter.State;
+        Log.Info(APP_NAME, "BT adapter state currently {0}", currentState);
+        UpdateWidgetDisplay(context, (int)currentState);
+        return;
+      }
+
       if(intent.Action == Android.Bluetooth.BluetoothAdapter.ActionStateChanged)
       {
         Log.Info(APP_NAME, "Received BT Action State change message");
         ProcessBTStateChangeMessage(context, intent);
+        return;
       }
     }
 
@@ -48,13 +67,22 @@ namespace BluetoothWidget
       string message = string.Format("Bluetooth State Change from {0} to {1}", prevState, newState);
       Log.Info(APP_NAME, message);
 
+      UpdateWidgetDisplay(context, newState);
+    }
+
+    /// <summary>
+    /// Updates the widget display image based on the new state
+    /// </summary>
+    /// <param name="context">Context.</param>
+    /// <param name="newState">New state.</param>
+    private void UpdateWidgetDisplay(Context context, int newState)
+    {
       var appWidgetManager = AppWidgetManager.GetInstance(context);
       var remoteViews = new RemoteViews(context.PackageName, Resource.Layout.initial_layout);
       Log.Debug(APP_NAME, "this.GetType().ToString(): {0}", this.GetType().ToString());
 
       var thisWidget = new ComponentName(context, this.Class);
       Log.Debug(APP_NAME, thisWidget.FlattenToString());
-      Log.Debug(APP_NAME, string.Format("{0}->{1}", prevState, newState));
       Log.Debug(APP_NAME, "remoteViews: {0}", remoteViews.ToString());
 
       int imgResource = Resource.Drawable.bluetooth_off;
