@@ -1,5 +1,4 @@
-Building a Xamarin.Android Bluetooth status widget
-==================================================
+### Building a Bluetooth status widget with Xamarin
 
 This is an example of how to build a simple status widget in Xamarin, using the Bluetooth adapter as a source.
 
