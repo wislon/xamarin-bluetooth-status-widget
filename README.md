@@ -1,5 +1,7 @@
 ### Building a Bluetooth status widget with Xamarin
 
+![bluetooth logo](https://github.com/wislon/xamarin-bluetooth-status-widget/blob/master/src/BluetoothWidget/Resources/drawable-xhdpi/bluetooth_on.png)![bluetooth logo](https://github.com/wislon/xamarin-bluetooth-status-widget/blob/master/src/BluetoothWidget/Resources/drawable-xhdpi/bluetooth_off.png)
+
 This is an example of how to build a simple status widget in Xamarin, using the Bluetooth adapter as a source.
 
 It demonstrates:
